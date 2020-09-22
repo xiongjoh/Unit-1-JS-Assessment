@@ -30,7 +30,7 @@ function getName(character) {
  */
 function getFilmCount(character) {
   // TODO: Add your code inside the functions (others below).
-
+  return character.films.length
 }
 
 /**
@@ -43,7 +43,16 @@ function getFilmCount(character) {
 */
 function getSecondStarshipName(character) {
   // TODO: Add your code here.
+  // console.log('Hello')
+  // console.log(character.starships[0].length)
+  if (character.starships[1] === undefined) {
+    return `none`;
+  }
+  else {
+    return character.starships[1].name;
+  }
 }
+
 
 /**
  * ### Challenge `getSummary`
@@ -56,6 +65,7 @@ function getSecondStarshipName(character) {
  */
 function getSummary(character) {
   // TODO: Add your code here.
+  return `${character.name}, ${character.height}cm, ${character.mass}kg. Featured in ${character.films.length} films.`
 }
 
 /**
@@ -68,6 +78,10 @@ function getSummary(character) {
 */
 function getVehiclesCostInCreditsSumTotal(character) {
   // TODO: Add your code here.
+  let total = character.vehicles.reduce(function(cost, vehicle){
+    return cost += vehicle.cost_in_credits;
+  },0)
+  return total;
 }
 
 /**
@@ -82,6 +96,10 @@ function getVehiclesCostInCreditsSumTotal(character) {
 */
 function getStarshipPassengerAndCrewSumTotal(character) {
   // TODO: Add your code here.
+  let spots = character.starships.reduce(function(spots, starship) {
+    return spots += starship.crew + starship.passengers
+  }, 0)
+  return spots;
 }
 
 /**
@@ -99,6 +117,12 @@ function getStarshipPassengerAndCrewSumTotal(character) {
 */
 function getNthFilm(character, filmNumber) {
   // TODO: Add your code here.
+  if (1 <= filmNumber && filmNumber <= 3) {
+    return `${character.films[filmNumber - 1]}`
+  }
+  else {
+    return `There are only 3 Star Wars movies. Flan fiction excluded.`
+  }
 }
 
 /**
@@ -113,6 +137,17 @@ function getNthFilm(character, filmNumber) {
 */
 function getCargoCapacityTotal(character) {
   // TODO: Add your code here.
+  let totalCargo = character.vehicles.reduce(function(cargo, vehicle) {
+    return cargo += Number(vehicle.cargo_capacity);
+  }, 0)
+
+  let starshipCargo = character.starships.reduce(function(cargo, starship){
+    return cargo += Number(starship.cargo_capacity);
+  },0)
+
+  totalCargo += starshipCargo;
+
+  return totalCargo;
 }
 
 /**
@@ -128,6 +163,23 @@ function getCargoCapacityTotal(character) {
 */
 function getFastestStarshipName(character) {
   // TODO: Add your code here.
+  let speediest = [];
+  if (character.starships[0] === undefined) {
+    return `none`
+  }
+  else {
+    let comparator = Number(character.starships[0].max_atmosphering_speed);
+    // speediest = 
+    character.starships.forEach(function(starship) {
+      if (Number(starship.max_atmosphering_speed) >= comparator) {
+        speediest.shift()
+        comparator = Number(starship.max_atmosphering_speed)
+        speediest.unshift(starship.name)
+      }
+    })
+  }
+  console.log(speediest)
+  return speediest[0];
 }
 
 /**
